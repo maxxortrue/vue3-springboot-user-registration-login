@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-FiletransferApplication<filetransfer>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "site.questable.filetransfer.FiletransferApplication",
+            "projectName": "filetransfer",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
