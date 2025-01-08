@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-UserRegistrationApplication<user-registration>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "site.questable.user_registration.UserRegistrationApplication",
+            "projectName": "user-registration",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

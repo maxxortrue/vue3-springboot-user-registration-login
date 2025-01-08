@@ -1,40 +1,39 @@
 package site.questable.user_registration.service;
 
-import site.questable.user_registration.model.User;
-import site.questable.user_registration.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import site.questable.user_registration.model.Client;
+import site.questable.user_registration.repository.ClientRepository;
 
 import java.util.Collections;
 
 @Service
-public class UserService implements UserDetailsService {
+@RequiredArgsConstructor
+public class ClientService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final ClientRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    public User saveUser(User user) {
+    public Client saveUser(Client user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    public User findByEmail(String email) {
+    public Client findByUsername(String email) {
         return userRepository.findByEmail(email);
     }
 
+    public boolean checkUserPassword(String providedPassword, String storedEncryptedPassword) {
+        return passwordEncoder.matches(providedPassword, storedEncryptedPassword);
+    }    
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username);
+        Client user = userRepository.findByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }

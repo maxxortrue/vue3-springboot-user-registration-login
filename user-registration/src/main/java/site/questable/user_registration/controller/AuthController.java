@@ -1,34 +1,30 @@
 package site.questable.user_registration.controller;
 
-import site.questable.user_registration.model.User;
-import site.questable.user_registration.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import site.questable.user_registration.model.Client;
+import site.questable.user_registration.service.ClientService;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
+@CrossOrigin("http://localhost:5173/")
 public class AuthController {
 
-    private final UserService userService;
+    private final ClientService userService;
     private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    public AuthController(UserService userService, AuthenticationManager authenticationManager) {
-        this.userService = userService;
-        this.authenticationManager = authenticationManager;
-    }
-
     @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
+    public Client registerUser(@RequestBody Client user) {
         return userService.saveUser(user);
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestBody User user) {
+    public String loginUser(@RequestBody Client user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
         );
